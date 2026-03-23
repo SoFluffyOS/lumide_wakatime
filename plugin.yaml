@@ -1,0 +1,27 @@
+id: lumide_wakatime
+name: 'WakaTime'
+description: 'WakaTime time tracking for Lumide IDE'
+entry_point: 'bin/main.dart'
+
+activation_events:
+  - 'onStartup'
+
+permissions:
+  - fileSystem:
+      - '${workspace}/**'
+      - '${home}/.wakatime/**'
+  - shell:
+      - 'wakatime-cli'
+
+configuration:
+  - key: wakatime.statusBar
+    type: boolean
+    default: true
+    title: 'Status Bar Activity'
+    description: 'Whether to show today''s coding activity in the status bar'
+
+contributes:
+  commands:
+    - id: wakatime.apiKey
+      title: 'WakaTime: API Key'
+      category: 'WakaTime'

@@ -1,0 +1,19 @@
+name: lumide_wakatime
+description: "WakaTime time tracking extension for Lumide IDE"
+version: 1.0.0+1
+homepage: https://lumide.dev
+repository: https://github.com/SoFluffyOS/lumide_wakatime
+
+executables:
+  lumide_wakatime: main
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  lumide_api: 1.0.0
+  path: 1.9.1
+
+dev_dependencies:
+  test:
+  lints: ^6.0.0
