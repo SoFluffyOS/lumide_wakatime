@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:lumide_api/lumide_api.dart';
 
-import 'package:lumide_wakatime/src/path_utils.dart';
+import 'package:lumide_wakatime/src/cli_locator.dart';
 
 class StatusBarManager {
-  StatusBarManager(this._context, this._plugin);
+  StatusBarManager(this._context, this._plugin, this._cliLocator);
 
   final LumideContext _context;
   final LumidePlugin _plugin;
+  final CliLocator _cliLocator;
 
   static const _statusId = 'wakatime.status';
   static const _configKey = 'wakatime.statusBar';
@@ -60,7 +61,7 @@ class StatusBarManager {
   }
 
   Future<void> fetchTodayActivity() async {
-    final cliPath = await getCliPath();
+    final cliPath = await _cliLocator.cliPath();
     const args = <String>['--today', '--output', 'json'];
 
     try {

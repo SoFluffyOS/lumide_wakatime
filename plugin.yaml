@@ -12,6 +12,15 @@ permissions:
       - '${home}/.wakatime/**'
   - shell:
       - 'wakatime-cli'
+      - 'wakatime-cli-darwin-amd64'
+      - 'wakatime-cli-darwin-arm64'
+      - 'wakatime-cli-linux-amd64'
+      - 'wakatime-cli-linux-arm64'
+      - 'wakatime-cli-linux-386'
+      - 'wakatime-cli-linux-arm'
+      - 'wakatime-cli-windows-amd64'
+      - 'wakatime-cli-windows-arm64'
+      - 'wakatime-cli-windows-386'
 
 configuration:
   - key: wakatime.statusBar

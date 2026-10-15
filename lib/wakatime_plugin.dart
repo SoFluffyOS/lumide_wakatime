@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'package:lumide_api/lumide_api.dart';
 
+import 'package:lumide_wakatime/src/cli_locator.dart';
 import 'package:lumide_wakatime/src/dependencies_manager.dart';
 import 'package:lumide_wakatime/src/event_observer.dart';
 import 'package:lumide_wakatime/src/heartbeat_manager.dart';
-import 'package:lumide_wakatime/src/path_utils.dart';
 import 'package:lumide_wakatime/src/status_bar_manager.dart';
 
 class WakaTimePlugin extends LumidePlugin {
+  CliLocator? _cliLocator;
   DependenciesManager? _dependenciesManager;
   HeartbeatManager? _heartbeatManager;
   EventObserver? _eventObserver;
@@ -17,15 +18,22 @@ class WakaTimePlugin extends LumidePlugin {
   Future<void> onActivate(LumideContext context) async {
     log('WakaTimePlugin activating...');
 
-    _dependenciesManager = DependenciesManager(context, this);
+    final cliLocator = CliLocator(context.fs.exists);
+    _cliLocator = cliLocator;
+    _dependenciesManager = DependenciesManager(cliLocator, this);
     if (!await _dependenciesManager!.isCliInstalled()) {
       await _dependenciesManager!.installCli();
     }
 
-    _statusBarManager = StatusBarManager(context, this);
+    _statusBarManager = StatusBarManager(context, this, cliLocator);
     await _statusBarManager!.initialize();
 
-    _heartbeatManager = HeartbeatManager(context, this, _statusBarManager!);
+    _heartbeatManager = HeartbeatManager(
+      context,
+      this,
+      _statusBarManager!,
+      cliLocator,
+    );
     _eventObserver = EventObserver(context, _heartbeatManager!);
 
     await _registerCommands(context);
@@ -59,7 +67,7 @@ class WakaTimePlugin extends LumidePlugin {
           }
 
           log('Saving API Key...');
-          final cliPath = await getCliPath();
+          final cliPath = await _cliLocator?.cliPath() ?? cliCommand;
           final result = await context.shell.run(cliPath, [
             '--config-write',
             'api_key=$validKey',

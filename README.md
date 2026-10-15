@@ -19,6 +19,16 @@ WakaTime allows you to gain deep insights into your programming habits. This plu
 4. Enter your [api key](https://wakatime.com/settings#apikey) by opening the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`), typing `WakaTime: API Key`, and pressing Enter.
 5. Use your IDE and your coding activity will be displayed on your [WakaTime dashboard](https://wakatime.com).
 
+## Requirements
+
+The plugin runs the official [`wakatime-cli`](https://github.com/wakatime/wakatime-cli). It looks for it in this order:
+
+1. `~/.wakatime/wakatime-cli-<os>-<arch>` (`.exe` on Windows), as installed by the official WakaTime editor plugins. For example `%USERPROFILE%\.wakatime\wakatime-cli-windows-amd64.exe` or `~/.wakatime/wakatime-cli-darwin-arm64`.
+2. `~/.wakatime/wakatime-cli` (`wakatime-cli.exe` on Windows).
+3. `wakatime-cli` on your `PATH`.
+
+If you have never used WakaTime in another editor, download the archive for your platform from the [wakatime-cli releases](https://github.com/wakatime/wakatime-cli/releases) and extract it into `~/.wakatime`.
+
 ## Commands
 
 - `WakaTime: API Key` - Prompts you to update your WakaTime API key, linking the IDE to your secure WakaTime dashboard. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`) and type `WakaTime`.

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:lumide_api/lumide_api.dart';
 
-import 'package:lumide_wakatime/src/path_utils.dart';
+import 'package:lumide_wakatime/src/cli_locator.dart';
 import 'package:lumide_wakatime/src/status_bar_manager.dart';
 
 typedef Heartbeat = ({
@@ -13,11 +13,17 @@ typedef Heartbeat = ({
 });
 
 class HeartbeatManager {
-  HeartbeatManager(this._context, this._plugin, this._statusBarManager);
+  HeartbeatManager(
+    this._context,
+    this._plugin,
+    this._statusBarManager,
+    this._cliLocator,
+  );
 
   final LumideContext _context;
   final LumidePlugin _plugin;
   final StatusBarManager _statusBarManager;
+  final CliLocator _cliLocator;
 
   final _queue = <Heartbeat>[];
   Timer? _debounceTimer;
@@ -56,7 +62,7 @@ class HeartbeatManager {
     final heartbeat = _queue.removeLast();
     _queue.clear();
 
-    final cliPath = await getCliPath();
+    final cliPath = await _cliLocator.cliPath();
     final args = <String>[
       '--entity',
       heartbeat.entity,

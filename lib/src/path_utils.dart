@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
 
 String toRealPath(Uri uri) {
   if (Platform.isWindows) {
@@ -44,11 +43,4 @@ String _toWindowsPath(Uri uri) {
   }
 
   return pathStr;
-}
-
-Future<String> getCliPath() async {
-  final home =
-      Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'] ?? '';
-  final ext = Platform.isWindows ? '.exe' : '';
-  return path.join(home, '.wakatime', 'wakatime-cli$ext');
 }
