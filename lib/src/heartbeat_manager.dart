@@ -69,7 +69,7 @@ class HeartbeatManager {
       '--time',
       heartbeat.time.toString(),
       '--plugin',
-      'Lumide/1.0.0 lumide-wakatime/1.0.0',
+      'Lumide/1.0.0 lumide-wakatime/1.0.1',
       '--category',
       'coding',
     ];
